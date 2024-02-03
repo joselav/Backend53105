@@ -5,5 +5,3 @@ Este repositorio contiene todos los entregables correspondientes a la comisión 
 ## Entregable 1
 
 El primer entregable se encuentra en la carpeta `Entregable1`. Este entregable consiste en la implementación de una clase `ProductManager` que gestiona un conjunto de productos según ciertas especificaciones. Puedes encontrar más detalles sobre este entregable en el archivo README dentro de la carpeta `Entregable1`.
-
-Para más información sobre cada entregable, por favor consulta la documentación dentro de cada carpeta correspondiente.
