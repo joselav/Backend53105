@@ -155,7 +155,7 @@ const results = async () =>{
 
   // ------ Eliminar producto: -------
 
-  //const deleteProducto = await mng.deleteProduct(2);
+  //const deleteProducto = await mng.deleteProduct(1);
   //console.log("Eliminar Producto ID 1", deleteProducto)
 
 
