@@ -1,0 +1,183 @@
+{"products":[
+    {
+      "id": 1,
+      "title": "Arroz blanco",
+      "description": "Arroz blanco de grano largo",
+      "price": 2.99,
+      "thumbnail": "sin imagen",
+      "code": "ARZ123",
+      "stock": 100
+    },
+    {
+      "id": 2,
+      "title": "Fideos de trigo",
+      "description": "Fideos de trigo para sopa",
+      "price": 1.49,
+      "thumbnail": "sin imagen",
+      "code": "FID456",
+      "stock": 80
+    },
+    {
+      "id": 3,
+      "title": "Leche entera",
+      "description": "Leche entera pasteurizada",
+      "price": 3.50,
+      "thumbnail": "sin imagen",
+      "code": "LEC789",
+      "stock": 120
+    },
+    {
+      "id": 4,
+      "title": "Pan blanco",
+      "description": "Pan blanco de molde",
+      "price": 1.99,
+      "thumbnail": "sin imagen",
+      "code": "PAN012",
+      "stock": 150
+    },
+    {
+      "id": 5,
+      "title": "Huevos",
+      "description": "Docena de huevos frescos",
+      "price": 2.79,
+      "thumbnail": "sin imagen",
+      "code": "HUE345",
+      "stock": 90
+    },
+    {
+      "id": 6,
+      "title": "Azúcar blanca",
+      "description": "Azúcar blanca refinada",
+      "price": 1.99,
+      "thumbnail": "sin imagen",
+      "code": "AZU678",
+      "stock": 110
+    },
+    {
+      "id": 7,
+      "title": "Aceite de oliva",
+      "description": "Aceite de oliva virgen extra",
+      "price": 5.99,
+      "thumbnail": "sin imagen",
+      "code": "ACE901",
+      "stock": 70
+    },
+    {
+      "id": 8,
+      "title": "Manzanas",
+      "description": "Manzanas rojas frescas",
+      "price": 0.79,
+      "thumbnail": "sin imagen",
+      "code": "MAN234",
+      "stock": 200
+    },
+    {
+      "id": 9,
+      "title": "Café en grano",
+      "description": "Café en grano tostado",
+      "price": 6.99,
+      "thumbnail": "sin imagen",
+      "code": "CAF567",
+      "stock": 50
+    },
+    {
+      "id": 10,
+      "title": "Queso cheddar",
+      "description": "Queso cheddar madurado",
+      "price": 4.49,
+      "thumbnail": "sin imagen",
+      "code": "QUE890",
+      "stock": 80
+    },
+    {
+      "id": 11,
+      "title": "Tomates",
+      "description": "Tomates frescos",
+      "price": 1.29,
+      "thumbnail": "sin imagen",
+      "code": "TOM123",
+      "stock": 120
+    },
+    {
+      "id": 12,
+      "title": "Pollo entero",
+      "description": "Pollo entero fresco",
+      "price": 7.99,
+      "thumbnail": "sin imagen",
+      "code": "POL456",
+      "stock": 60
+    },
+    {
+      "id": 13,
+      "title": "Papas",
+      "description": "Papas blancas frescas",
+      "price": 2.49,
+      "thumbnail": "sin imagen",
+      "code": "PAP789",
+      "stock": 100
+    },
+    {
+      "id": 14,
+      "title": "Yogur natural",
+      "description": "Yogur natural sin azúcar",
+      "price": 1.00,
+      "thumbnail": "sin imagen",
+      "code": "YOG012",
+      "stock": 120
+    },
+    {
+      "id": 15,
+      "title": "Atún enlatado",
+      "description": "Atún enlatado en agua",
+      "price": 1.79,
+      "thumbnail": "sin imagen",
+      "code": "ATU345",
+      "stock": 90
+    },
+    {
+      "id": 16,
+      "title": "Pasta de tomate",
+      "description": "Pasta de tomate enlatada",
+      "price": 0.99,
+      "thumbnail": "sin imagen",
+      "code": "PAS678",
+      "stock": 110
+    },
+    {
+      "id": 17,
+      "title": "Papel higiénico",
+      "description": "Rollo de papel higiénico",
+      "price": 3.99,
+      "thumbnail": "sin imagen",
+      "code": "PAE901",
+      "stock": 70
+    },
+    {
+      "id": 18,
+      "title": "Cerveza",
+      "description": "Cerveza rubia en lata",
+      "price": 2.49,
+      "thumbnail": "sin imagen",
+      "code": "CER234",
+      "stock": 150
+    },
+    {
+      "id": 19,
+      "title": "Naranjas",
+      "description": "Naranjas frescas",
+      "price": 1.49,
+      "thumbnail": "sin imagen",
+      "code": "NAR567",
+      "stock": 80
+    },
+    {
+      "id": 20,
+      "title": "Pasta de dientes",
+      "description": "Pasta de dientes con flúor",
+      "price": 2.99,
+      "thumbnail": "sin imagen",
+      "code": "PAS890",
+      "stock": 100
+    }
+  ]
+  }
