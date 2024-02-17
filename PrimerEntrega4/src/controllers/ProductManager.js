@@ -36,7 +36,7 @@ class ProductManager {
         const productID = data.products.find(item=> item.id === id)
 
         if(!productID){
-            return 'NOT FOUND. No hay producto existente con ese número de ID.'
+            return {success: false, message: 'NOT FOUND. No hay producto existente con ese número de ID.'}
         }
 
         //Le apliqué un sucess= true y un Message para poder llamarlo más fácil en el app.js. También le agregué un JSON.Stringify porque sino salia [object Object].
@@ -133,44 +133,3 @@ class ProductManager {
 }
 
 export default ProductManager;
-
-// const results = async () =>{
-//     const mng = new ProductManager();
-
-//     //Mostrar los prodcutos
-//   const gp = await mng.getProducts();
-//   console.log("mostrar todos los productos", gp);
-
-
-//   // -----   Agregar producto -------
-//   const agregarProducto= await mng.addProduct("Producto de prueba", "Este es un producto de prueba", 200, "sin imágen", "abc123", 25);
-//   console.log("Producto agregado", agregarProducto);
-
-
-
-//   //------ Mostrar productos por ID ----- 
-  
-//   //const prodID= await mng.getProductsByID(1);
-//   //console.log("Mostrar producto con ID1", prodID)
-
-//   //----- Actualizar producto: -----
-
-//   //const updateProducto = await mng.updateProduct(1,{title: "Arroz"})
-//   //console.log("Modificar Nombre ID1", updateProducto);
-
-//   // ------ Eliminar producto: -------
-
-//   //const deleteProducto = await mng.deleteProduct(1);
-//   //console.log("Eliminar Producto ID 1", deleteProducto)
-
-
-//  //--------Para mostrar nuevamente la lista de productos actualizada:----- 
-//  //Debe estar a lo último, ya que al ser una función asincrónica se va deteniendo por partes. Sino, no me mostraba los productos actualizados. 
-//   const updateDB = await mng.getProducts();
-//   console.log("Productos actualizados", updateDB);
-
-// }
-
-// results()
-
-
