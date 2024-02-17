@@ -18,7 +18,7 @@ app.get('/products', async (req,res) =>{
     const product = await productData.getProducts();
     
     //Si funciona, es decir, si sucess== true, se busca el límiite o se le aplica.
-    if(product.success = true){ 
+    if(product.success){ 
       const prod = product.message;
       const limit = req.query.limit ? parseInt(req.query.limit) : product.length;
       const productLimit = prod.slice(0,limit);
@@ -36,7 +36,7 @@ app.get('/products/:pid', async (req, res) =>{
     const product = await productData.getProductsByID(parseInt(id));
 
     //Si es exitoso, se muestra un mensaje, si no, se muestra otro, que ya los he expecificado en la clase. 
-    if(product.success = true){
+    if(product.success){
       res.status(200).send(product.message);
     }else {
       res.status(400).send(product.message);

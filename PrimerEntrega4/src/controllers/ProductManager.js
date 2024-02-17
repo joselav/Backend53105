@@ -1,7 +1,5 @@
 //FileSystem con promesas
 import fs from 'fs/promises'
-//const fs = require("fs").promises;
-//console.log(fs);
 
 class ProductManager {
     // static staticIDProd = 0; //Contador del ID autoincrementable, utilizado en el entregable anterior. No funciona en este, no autoincrementa. 
@@ -27,7 +25,7 @@ class ProductManager {
         const pr = data.products;
 
         if(!pr){
-             return {success:false, message: "No se han encontrado productos"}; }
+             return {sucess:false, message: "No se han encontrado productos"}; }
 
         return {success: true, message: pr}
     }
@@ -38,7 +36,7 @@ class ProductManager {
         const productID = data.products.find(item=> item.id === id)
 
         if(!productID){
-            return {success:false, message:'NOT FOUND. No hay producto existente con ese número de ID.'}
+            return 'NOT FOUND. No hay producto existente con ese número de ID.'
         }
 
         //Le apliqué un sucess= true y un Message para poder llamarlo más fácil en el app.js. También le agregué un JSON.Stringify porque sino salia [object Object].
@@ -49,8 +47,8 @@ class ProductManager {
     const data = JSON.parse(await fs.readFile(this.path, "utf-8"));
 
         //Verificación que expresa que si no existe alguno de los campos, no se agregue el producto hasta que no se complete. 
-        if(!title || !description || !price || !thumbnail || !code || !stock){
-            return {success: false, message:"Todos los campos son obligatorios"};
+        if(!title || !description || !price || !code || !stock){
+            return {success: false, message:"Todos los campos, a excepción del Thumbnails, son obligatorios"};
         }
 
          //Verigicación para que el código sea único.
@@ -58,9 +56,8 @@ class ProductManager {
         //En este caso si el código ingresado en el nuevo producto ya existe en la base de datos, por ejemplo. 
         //data llama a la constante que lee la ruta "products" hace referencia al nombre del arreglo dentro de la ruta.
         if(data.products.some(item=> item.code === code)){
-            return {success: false, message:'El código (code) ingresado ya existe en nuestra base de datos. Por favor, ingrese uno que sea único.'}
+            return {success: false, message: 'El código (code) ingresado ya existe en nuestra base de datos. Por favor, ingrese uno que sea único.'}
         }
-
 
          
         //Recibo los datos y los ordeno dentro de un nuevo objeto de productos. 
@@ -71,7 +68,8 @@ class ProductManager {
             price, 
             thumbnail, 
             code, 
-            stock
+            stock,
+            status:true //Valor predeterminado, booleano. 
         }
 
         //pusheo la información.
@@ -105,7 +103,9 @@ class ProductManager {
 
             //Esperamos a que se reescriba el archivo y se actualice el producto
             await fs.writeFile(this.path, JSON.stringify(data));
-            return {success: true, message: `Se ha actualizado el producto ${product.title} exitosamente.`};
+            
+            //Aquí he agregado el JSON.stringify, otra vez, para evitar el [object Object], además de agregar que solo se muestre el nombre del producto y el array completo a su lado.
+            return {success: true, message: `Se ha actualizado el producto ${JSON.stringify(prodUpdate.title)} exitosamente: ${JSON.stringify(prodUpdate)}`};
         } else{
             return {success: false, message:"Producto no encontrado o inexistente"};
         }
@@ -125,11 +125,52 @@ class ProductManager {
             //Esperamos a que el archivo se actualice con la información.
             await fs.writeFile(this.path, JSON.stringify(data));
 
-            return {success: true, message: `Producto con id ${id} eliminado exitosamente`};
+            return {success: true, message: `Producto con id ${JSON.stringify(deleteProd.id)} eliminado exitosamente`};
         } else{
-            return {success: false, message: `Producto con id ${id} no encontrado o inexistente.`}
+            return {success: false, message: `Producto con id ${JSON.stringify(deleteProd.id)} no encontrado o inexistente.`}
         }
     }
 }
 
 export default ProductManager;
+
+// const results = async () =>{
+//     const mng = new ProductManager();
+
+//     //Mostrar los prodcutos
+//   const gp = await mng.getProducts();
+//   console.log("mostrar todos los productos", gp);
+
+
+//   // -----   Agregar producto -------
+//   const agregarProducto= await mng.addProduct("Producto de prueba", "Este es un producto de prueba", 200, "sin imágen", "abc123", 25);
+//   console.log("Producto agregado", agregarProducto);
+
+
+
+//   //------ Mostrar productos por ID ----- 
+  
+//   //const prodID= await mng.getProductsByID(1);
+//   //console.log("Mostrar producto con ID1", prodID)
+
+//   //----- Actualizar producto: -----
+
+//   //const updateProducto = await mng.updateProduct(1,{title: "Arroz"})
+//   //console.log("Modificar Nombre ID1", updateProducto);
+
+//   // ------ Eliminar producto: -------
+
+//   //const deleteProducto = await mng.deleteProduct(1);
+//   //console.log("Eliminar Producto ID 1", deleteProducto)
+
+
+//  //--------Para mostrar nuevamente la lista de productos actualizada:----- 
+//  //Debe estar a lo último, ya que al ser una función asincrónica se va deteniendo por partes. Sino, no me mostraba los productos actualizados. 
+//   const updateDB = await mng.getProducts();
+//   console.log("Productos actualizados", updateDB);
+
+// }
+
+// results()
+
+
