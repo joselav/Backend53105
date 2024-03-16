@@ -1,5 +1,5 @@
 const CartModel = require("../models/carts.model.js");
-
+const ProductModel = require("../models/products.model.js")
 
 
 class CartManager{
@@ -51,19 +51,21 @@ class CartManager{
     async addProductsToCart(cid, pid){
        try{ //Buscamos que el cid ingresado coincida con uno dentro del archivo:  
         const cart = await CartModel.findById(cid);
-        const prodExist= cart.products.find((prod)=> prod.product.toString() === pid);
+        const prodExist= cart.products.find((prod)=> prod.id_prod === pid);
             
             //Verificamos que se haya encontrado el pid deseado en el carrito para sumar la cantidad:
             if(prodExist){
-                prodExist.quantity+= quantity;
+                prodExist.quantity += quantity;
             }else{
-                cart.product.push({product: pid, quantity:1});
+                cart.products.push({id_prod: pid, quantity:1});
             }  
 
+            console.log(cart.products)
+
             // Al modificar un archivo, se debe marcar por lo que utilizamos "markModified"
-            cart.markModified("product");
-            await cart.save()
-            return {success:true, message: `El producto con id ${pid} se ha agregado correctamente.`}
+             cart.markModified("products");
+             await cart.save()
+             return {success:true, message: `El producto con id ${pid} se ha agregado correctamente.`}
         }catch{
             //Enviamos un mensaje de que no se pudo crear el carrito:
             return {success: false, message: 'No se ha podido crear el producto'}
