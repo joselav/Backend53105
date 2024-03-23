@@ -1,0 +1,16 @@
+<div id="listCarrito">
+    {{#if carrito.success}}
+        <h2>Contenido del Carrito</h2>
+        {{#each carrito.message}}
+            <h3>Carrito ID: {{this._id}}</h3>
+            {{#each this.products}}
+                <div class="produs">
+                    <h4>Producto ID: {{this.products.id_prod}}</h4>
+                    <p>Cantidad: {{this.products.quantity}}</p>
+                </div>
+            {{/each}}
+        {{/each}}
+    {{else}}
+        <p>No hay productos en el carrito.</p>
+    {{/if}}
+</div>
