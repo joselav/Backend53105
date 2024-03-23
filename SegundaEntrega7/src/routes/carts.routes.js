@@ -54,7 +54,7 @@ cartRouter.post('/', async (req, res)=>{
 
 
 //La ruta POST  /:cid/product/:pid deberá agregar el producto al arreglo “products” del carrito seleccionado,
- cartRouter.post('/:cid/product/:pid', async (req, res)=>{
+ cartRouter.post('/:cid/products/:pid', async (req, res)=>{
     //Pedimos los parametros cid y pid:
     const {cid, pid} = req.params;
     const {quantity} = req.body 
@@ -70,12 +70,16 @@ cartRouter.post('/', async (req, res)=>{
  })
 
 //La ruta Put /:cid/product/:pid deberá poder actualizar SÓLO la cantidad de ejemplares del producto por cualquier cantidad pasada desde req.body
-cartRouter.put('/:cid/product/:pid', async (req, res)=>{
+cartRouter.put('/:cid/products/:pid', async (req, res)=>{
+    //Pedimos el cid y pid como parametros
     const {cid, pid} = req.params; 
+    //Pedimos la cantidad desde el body
     const {quantity} = req.body;
 
+    //Enviamos la información al cartManager
     const prodUpdate = await cartData.updateProdInCart(cid, pid, quantity);
 
+    //Mostramos los mensajes
     if(prodUpdate.success){
         res.status(200).send(prodUpdate.message)
     }else{
@@ -86,11 +90,15 @@ cartRouter.put('/:cid/product/:pid', async (req, res)=>{
 
 //La ruta PUT /:cid deberá actualizar el carrito con un arreglo de productos con el formato especificado arriba:
 cartRouter.put('/:cid', async(req, res)=>{
+    //Pedimos el cid como parámetro
     const {cid} = req.params;
+    //Pedimos el id_prod y la cantidad como información desde el cuerpo
     const {id_prod, quantity} = req.body;
 
+    //Enviamos los datos recibidos al cartManeger
     const cartUpdate = await cartData.updateCart(cid, id_prod, quantity);
 
+    //Controlamos los errores y enviamos mensaje
     if(cartUpdate.success){
         res.status(200).send(cartUpdate.message)
     }else{
@@ -100,11 +108,14 @@ cartRouter.put('/:cid', async(req, res)=>{
 
 
 //La ruta DELETE api/carts/:cid/products/:pid deberá eliminar del carrito el producto seleccionado.
-cartRouter.delete('/:cid/product/:pid', async(req, res)=>{
+cartRouter.delete('/:cid/products/:pid', async(req, res)=>{
+    //Pedimos el cid y pid como parámetros
     const {cid, pid} = req.params;
     
+    //Los enviamos al cartManager para controlar errores
     const deleteProdCart = await cartData.deleteProductsInCart(cid,pid);
 
+    //Mostramos los mensajes correspondientes
     if(deleteProdCart.success){
         res.status(200).send(deleteProdCart.message)
     }else{
@@ -114,9 +125,12 @@ cartRouter.delete('/:cid/product/:pid', async(req, res)=>{
 
 //La ruta DELETE api/carts/:cid deberá eliminar todos los productos del carrito 
 cartRouter.delete('/:cid', async(req, res)=>{
+    //Pedimos el cid como parámetro
     const {cid} = req.params;
+    //Enviamos la información al cartManager
     const deleteCart = await cartData.deleteCart(cid);
 
+    //Mostramos los mensajes correspondientes
     if(deleteCart.success){
         res.status(200).send(deleteCart.message);
     }else{

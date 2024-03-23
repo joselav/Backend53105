@@ -10,15 +10,21 @@ const cartData = new CartManager();
 
 viewsRouter.get("/products", async (req,res)=>{
 
+    //definimos el limit, pidiendo el dato que nos envíao o 10 por defecto;
     const limit =req.query.limit ||  10; 
+    //Lo mismo con la page, la que nos envían o 1 por defecto;
     const page = req.query.page || 1; 
+    //También con el sort, lo que ellos decidan o ascendente por defecto;
     const sort = req.query.sort || 'asc';
+    //En el caso de la categoría, que es el dato que muestro en pantalla, la que ellos decidan o nada y que se muestren todos los elementos
     const category = req.query.category || '';
 
     try{
 
+        //enviamos la información al cartManager para que los pueda leer
         const products = await productData.getProducts(limit, page, sort, category);
 
+        //enviamos la información a la vista
         res.render("home", 
         {productos: products});
     }catch(error){
@@ -30,9 +36,20 @@ viewsRouter.get("/products", async (req,res)=>{
 
 viewsRouter.get("/carrito", async(req, res)=>{
     try{
-        const carrito = await cartData.getCartAll();
-        //console.log(carrito);
-            res.render("carrito", {carrito: carrito.message})
+        //Llamamos la infomación del carrito desde el Manager
+         const carrito = await cartData.getCartAll();
+        
+        //Acá lo mostraba en consola porque no funcionaba en handlebars jeje.
+         //console.log(carrito);
+
+         ///sin esto, handlebars no me leía los datos.
+         //básicamente lo que hace es: 
+         // con JSON.stringify convierte la infomación en cadena JSON y con JSON.parse lo vuelve un objeto para que Handlebars lo pueda leer correctamente. 
+         const cart = JSON.parse(JSON.stringify(carrito.message));
+
+
+         //renderizamos y enviamos la información a la vista. 
+         res.render("carrito", {carrito: cart})
         
     }catch(error){
         res.status(500).send({error: "Error interno del servidor"})

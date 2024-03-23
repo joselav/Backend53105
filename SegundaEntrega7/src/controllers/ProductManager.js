@@ -4,24 +4,45 @@ class ProductManager {
 
  //El método getProducts debe leer el archivo de productos y devolver todos los productos en formato de arreglo.
     async getProducts(limit, page, sort, category){
+        //definimos que query por defecto esté vacío
         let query = {}
 
+        //En caso de que nos envíen la categoría desde las rutas, cambiamos a que query sea igual a categoría
         if(category){
             query.category = category; 
         }
 
+        //Esperamos a que paginate reciba la información que estamos pidiendole
         const products = await ProductModel.paginate(query, {limit, page, sort:{price: sort === "desc" ? -1 : 1 }});
 
 
 
+        //pasamos la infomación a Object para que se pueda leer correctamente la información y compararla con la de la base de datos
         const prod = products.docs.map(pr =>{
             const {_id, ...rest} = pr.toObject();
             return rest;
         })
 
 
+        //Si no existe información en lo que se nos ha pedido, enviamos mensjae de error
         if(!products){
              return {sucess:false, message: "No se han encontrado productos"}; }
+
+
+        //creamos como se debe mostrar la información;
+        //El método GET deberá devolver un objeto con el siguiente formato:
+        // {
+        // 	status:success/error
+        // payload: Resultado de los productos solicitados
+        // totalPages: Total de páginas
+        // prevPage: Página anterior
+        // nextPage: Página siguiente
+        // page: Página actual
+        // hasPrevPage: Indicador para saber si la página previa existe
+        // hasNextPage: Indicador para saber si la página siguiente existe.
+        // prevLink: Link directo a la página previa (null si hasPrevPage=false)
+        // nextLink: Link directo a la página siguiente (null si hasNextPage=false)
+        // }
 
         const resultado = {
             status: products.status,
@@ -36,6 +57,8 @@ class ProductManager {
             nextLink: products.hasNextPage ? `/api/products?page=${products.nextPage}` : null
         }
 
+
+        //Devolvemos el mensaje con la información correspondiente
         return {success: true, message:resultado}
     }
 

@@ -14,19 +14,22 @@ const productData = new ProductManager(); //Y también definimos el ProductManag
 
 //Ruta para obtener todos los productos o para obtener un límite de productos (por ejemplo, los primeros 5)
 productRouter.get('/', async (req,res) =>{
+    //Definimos el Limit como 10 por defecto, o el que nos pase el usuario.
     const limit = req.query.limit || 10;
+    //Definimos que nos muestre la página 1 por defecto, o la que nos pase el usuairo.
     const page = req.query.page || 1;
+    //En el caso que nos pidan la categoría, la que nos pidieron o por defecto nada y nos enseña todos los productos. 
     const category = req.query.category || "";
+    //Definimos que nos muetre los productos de forma ascendente por defecto, o lo que nos pida el usuario.
     const sort = req.query.sort || "asc";
-    //Esperamos la función de la clase de ProductManager:
+
+    //Esperamos la función de la clase de ProductManager y le pasamos los datos:
     const product = await productData.getProducts(limit,page,sort, category);
 
-    //Si funciona, es decir, si sucess== true, se busca el límiite o se le aplica.
+    //Si funciona, es decir, si sucess== true, se envía la respuesta.
     if(product.success){ 
       const prod = product.message;
-
-    //   const limt = req.query.limit ? parseInt(req.query.limit) : product.length;
-    //   const productLimit = prod.slice(0,limt);
+      
       res.status(200).send(prod)}
       else {res.status(400).send("Error al cargar datos")}
 

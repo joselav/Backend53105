@@ -23,3 +23,11 @@ El este tercer entregable del curso de Backend, nos centramos en el desarrollo d
 
 ## Entregable 5 
 En este quinto entregable se integra WebSocket y Handlebars en un servidor Node.js utilizando Express. El servidor se configura para actualizar en tiempo real una lista de productos, tanto en una vista "home.handlebars" como en una vista "realTimeProducts.handlebars". Además, se implementa un formulario simple en la vista "realTimeProducts.handlebars" para la creación y eliminación de productos a través de websockets.  Encuentra más detalles sobre la estructura del proyecto en la carpeta 'Entregable5'.
+
+## Entregable 6
+Este entregable cumple con las consignas establecidas al agregar la persistencia de datos con MongoDB y Mongoose, implementar un chat en tiempo real con almacenamiento en la base de datos y garantizar el correcto funcionamiento de todas las funcionalidades previamente establecidas en el proyecto.
+Encuentra más detalles sobre la estructura del proyecto en la carpeta 'Entregable6'.
+
+## Segunda Entrega - Entregable 7
+Este entregable cumple con las consignas establecidas al implementar las modificaciones necesarias en el método GET / para consultas avanzadas de productos, así como la creación de nuevos endpoints en el router de carts para mejorar la gestión de carritos. Las nuevas vistas proporcionan una experiencia de usuario mejorada al visualizar y manipular los datos de manera eficiente.
+Encuentra más detalles sobre la estructura del proyecto en la carpeta 'SegundaEntrega7'.
