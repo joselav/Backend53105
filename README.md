@@ -31,3 +31,7 @@ Encuentra más detalles sobre la estructura del proyecto en la carpeta 'Entregab
 ## Segunda Entrega - Entregable 7
 Este entregable cumple con las consignas establecidas al implementar las modificaciones necesarias en el método GET / para consultas avanzadas de productos, así como la creación de nuevos endpoints en el router de carts para mejorar la gestión de carritos. Las nuevas vistas proporcionan una experiencia de usuario mejorada al visualizar y manipular los datos de manera eficiente.
 Encuentra más detalles sobre la estructura del proyecto en la carpeta 'SegundaEntrega7'.
+
+## Entregable 8
+Este entregable se centra en la implementación de un sistema de login en nuestro servidor principal. Se han añadido funcionalidades como la autenticación de usuarios, redirección a la vista de productos tras el login, mensaje de bienvenida personalizado en la vista de productos, sistema de roles para administradores y usuarios, y un botón de logout para cerrar sesión de forma segura.
+Para más detalles sobre la implementación y la estructura del proyecto, consulta la carpeta 'Entregable8'.
