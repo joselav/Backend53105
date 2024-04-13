@@ -35,3 +35,6 @@ Encuentra más detalles sobre la estructura del proyecto en la carpeta 'SegundaE
 ## Entregable 8
 Este entregable se centra en la implementación de un sistema de login en nuestro servidor principal. Se han añadido funcionalidades como la autenticación de usuarios, redirección a la vista de productos tras el login, mensaje de bienvenida personalizado en la vista de productos, sistema de roles para administradores y usuarios, y un botón de logout para cerrar sesión de forma segura.
 Para más detalles sobre la implementación y la estructura del proyecto, consulta la carpeta 'Entregable8'.
+
+## Entregabla 9 
+Este entregable se centra en la implementación de sistema de autenticación en nuestro servidor Node.js. Utilizando la biblioteca bcrypt, se ha asegurado el almacenamiento seguro de las contraseñas de los usuarios, mientras que la integración de Passport ha permitido gestionar eficazmente tanto el registro como el login, incluyendo la autenticación de GitHub. Este trabajo se encuentra detallado en la carpeta 'Entregable9'.
