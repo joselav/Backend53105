@@ -1,8 +1,10 @@
 //Aplicamos conexión con MONGODB:
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+dotenv.config();
 
 //creamos la conección:
 
-mongoose.connect("mongodb+srv://josefinalavinia05:1234Coder@cluster0.f5zhko4.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect(process.env.MONGO_URL)
     .then(()=> console.log("Conexión con DB exitosa"))
     .catch((error)=> console.log("Error en la conexión", error))

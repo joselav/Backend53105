@@ -1,11 +1,8 @@
 //Importamos módulos de passport: 
 const passport = require("passport");
-const local = require("passport-local");
 const GitHubStrategy = require("passport-github2");
-
-//importamos jwt: 
-const jwtToken = require("jsonwebtoken");
-
+const dotenv = require("dotenv");
+dotenv.config();
 
 //jwt: 
 const jwt = require("passport-jwt");
@@ -32,7 +29,7 @@ const initializePassport = () =>{
 
     const jwtOpt = {
         jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
-        secretOrKey: "SecretCoder",
+        secretOrKey: process.env.JWTSecret,
     }
 
     //Creamos estratégia JWT:
