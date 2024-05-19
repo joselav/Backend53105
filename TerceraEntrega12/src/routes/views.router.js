@@ -20,7 +20,9 @@ const productData = new ProductManager();
 const cartData = new CartManager();
 
 const cartController = require("../controllers/cart.controller.js");
+const ticketController = require("../controllers/ticket.controller.js");
 const cData = new cartController();
+const tData= new ticketController();
 
 viewsRouter.get("/products", passport.authenticate("jwt", {session:false}), AllowedUser('user'), async (req,res)=>{
 
@@ -32,7 +34,6 @@ viewsRouter.get("/products", passport.authenticate("jwt", {session:false}), Allo
         const cartID = await CartModel.findById(cart); 
 
         console.log("carrito!!!", req.user.cart.toString())
-        console.log("Carrito???", cartID.products)
 
         let cartCount = 0;
 
@@ -48,6 +49,7 @@ viewsRouter.get("/products", passport.authenticate("jwt", {session:false}), Allo
             cartCount: cartCount,
             first_name: req.user.first_name,
             last_name: req.user.last_name,
+            email: req.user.email,
             rol: req.user.rol
         };
         console.log(user)
@@ -71,32 +73,26 @@ viewsRouter.get("/home", passport.authenticate("jwt", {session:false}), async(re
     res.render("home", {user: user});
 })
 
-viewsRouter.get("/carrito", async(req, res)=>{
-    try{
-        //Llamamos la infomación del carrito desde el Manager
-         const carrito = await cartData.getCartAll();
+viewsRouter.get("/carrito", async (req, res) => {
+    try {
+        // Llamamos la información del carrito desde el controlador
+        await cData.getCartsViews(req, res);
 
-        //Acá lo mostraba en consola porque no funcionaba en handlebars jeje.
-         //console.log(carrito);
-
-         ///sin esto, handlebars no me leía los datos.
-         //básicamente lo que hace es: 
-         // con JSON.stringify convierte la infomación en cadena JSON y con JSON.parse lo vuelve un objeto para que Handlebars lo pueda leer correctamente. 
-         const carts = JSON.parse(JSON.stringify(carrito.message));
-         
-
-         //renderizamos y enviamos la información a la vista. 
-         res.render("carrito", {carrito: carts})
-        
-    }catch(error){
-        res.status(500).send({error: "Error interno del servidor"})
+        // No es necesario hacer nada más aquí, la función getCartsViews
+        // manejará la respuesta al cliente.
+    } catch (error) {
+        console.error("Error interno del servidor:", error);
+        res.status(500).send({ error: "Error interno del servidor" });
     }
-})
+});
 
 viewsRouter.get("/realtimeproducts",passport.authenticate("jwt", {session:false}), AllowedUser('admin'), async (req,res)=>{
 
     try{
-        const products = await productData.getProducts();
+        //const products = await productData.getProducts();
+        const products= await pData.getP(req,res);
+
+        console.log(products.payload)
 
         res.render("realTimeProducts", {productos: products});
     }catch(error){
@@ -149,9 +145,9 @@ viewsRouter.get("/login", async (req, res)=>{
 
 viewsRouter.get("/current",passport.authenticate("jwt", {session:false}), async (req, res)=>{
    try {
-    const {first_name, last_name, rol} = req.user;
+    const {first_name, last_name, email, rol} = req.user;
 
-    const user = new userDTO(first_name, last_name, rol);
+    const user = new userDTO(first_name, last_name, email, rol);
 
     res.render("current", {user:user});
    } catch (error) {
@@ -170,5 +166,54 @@ viewsRouter.post("/carts/:cid/products/:pid", passport.authenticate("jwt", { ses
         res.status(500).send({ error: "Error interno del servidor" });
     }
 });
+
+// Escucha la solicitud de eliminar el carrito
+viewsRouter.post("/carrito/:cid", async (req, res) => {
+    try {
+        // Obtener el CID del cuerpo de la solicitud
+        const { cid } = req.body;
+
+        // Llama al controlador deleteC para eliminar el carrito
+        const deleteCartResponse = await cData.deleteC(req, res, cid);
+
+        res.redirect("/carrito")
+    } catch (error) {
+        console.error("Error interno del servidor:", error);
+        res.status(500).send({ error: "Error interno del servidor" });
+    }
+});
+
+viewsRouter.post("/carts/:cid/products/:pid/delete", async(req, res)=>{
+    try {
+        const {cid, pid} = req.body;
+
+        await cData.deleteCPID(req,res,cid,pid);
+
+        res.redirect("/carrito");
+    } catch (error) {
+        res.status(500).send({ error: "Error interno del servidor" });
+    }
+})
+
+viewsRouter.post("/carts/:cid/purchase",passport.authenticate("jwt", { session: false }),AllowedUser('user'), async(req,res)=>{
+    const {cid} = req.params;
+    console.log(cid)
+   const purchase= await tData.purchasedTicket(req,res,cid);
+
+   if(purchase.success) {
+    
+    const ticketData = JSON.parse(JSON.stringify(purchase.ticket.message));
+    const user= req.user.first_name;
+
+    console.log("user",user);
+
+    console.log("ticket", ticketData)
+    
+    res.render("purchase", { user: user, ticket: ticketData });
+} else {
+    res.status(500).send({ error: "Error interno del servidor" });
+}
+
+})
 
 module.exports = viewsRouter;
