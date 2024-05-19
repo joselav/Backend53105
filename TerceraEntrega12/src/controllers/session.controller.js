@@ -17,7 +17,7 @@ class SessionController{
     try {
         const passHash = createHash(password);
         //Creamos el usuario en nuestra base de datos y guardamos los datos. 
-        const createUser = await session.createUser({first_name, last_name, age, email, password: passHash});
+        const createUser = await sessions.createUser({first_name, last_name, age, email, password: passHash});
 
         createUser.save()
 
@@ -34,6 +34,7 @@ class SessionController{
         
     } catch (error) {
         res.status(500).send("Error interno del servidor");
+        console.log(error)
     }
 
     }

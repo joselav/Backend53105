@@ -204,3 +204,33 @@ div.welcome button a{
 div.welcome button a:hover{
     color: black;
 }
+
+.cart{
+    width: 55px;
+    height: 55px;
+    margin: auto;
+    display: flex;
+    margin-left: 50px;
+    margin-top: 15px;
+}
+.cart:hover{
+    background-color: rgba(236, 190, 134, 0.291);
+    width: 55px;
+    height: 55px;
+    margin: auto;
+    margin-left: 50px;
+    margin-top: 15px;
+    border-radius: 10px;
+}
+.pcart{
+    background-color: transparent;
+    color: rgb(60, 39, 21);
+    font-weight: bold;
+    margin-top: 5px;
+    font-size: 20px;
+}
+.imgcart{
+    background-color: transparent;
+    width: 40px;
+    height: 40px;
+}

@@ -57,12 +57,17 @@ class CartServices{
             // Buscamos el carrito por su ID
             const cart = await CartModel.findById(cid);
             
+            // Verificamos si el carrito existe
+            if (!cart) {
+                return { success: false, message: 'Carrito no encontrado.' };
+            }
+            
             // Buscamos el índice del producto en el carrito
             const prodIndex = cart.products.findIndex(prod => prod.id_prod.equals(pid));
             
             if (prodIndex !== -1) {
                 // Si el producto ya está en el carrito, sumamos la cantidad
-                cart.products[prodIndex].quantity = quantity;
+                cart.products[prodIndex].quantity += quantity;
             } else {
                 // Si el producto no está en el carrito, lo añadimos al arreglo de productos
                 cart.products.push({ id_prod: pid, quantity: quantity });
@@ -82,7 +87,7 @@ class CartServices{
             return { success: false, message: 'No se ha podido agregar el producto al carrito.' };
         }
     }
-
+    
     //La fucnión deleteProductsInCart debería responder a la ruta DELETE api/carts/:cid/products/:pid que, a su vez, deberá eliminar del carrito el producto seleccionado.
 
     async deleteProductsInCart(cid,pid){

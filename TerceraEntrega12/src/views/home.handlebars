@@ -6,9 +6,11 @@
 <div>
 
 {{#if (eq user.rol 'admin')}}
-       <button><a href="">Modificar Productos</a></button>
+       <a href="/realtimeproducts"><button>Modificar Productos</button></a>
    {{else if (eq user.rol 'user')}}
-       <button><a href="">Ver Productos</a></button>
+       <a href="/products"><button>Ver Productos</button></a>
+       <a href="/chat"><button>Ingresar al Chat</button></a>
+       <a href="/carrito"><button>Ver Productos en Carrito</button></a>
 {{/if}}
 
 </div>

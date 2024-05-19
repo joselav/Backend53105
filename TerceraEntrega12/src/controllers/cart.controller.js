@@ -38,20 +38,29 @@ class CartController{
     }
 
 
-    async addCPID(req, res){
-         //Pedimos los parametros cid y pid:
-        const {cid, pid} = req.params;
-        const {quantity} = req.body 
-        //Enviamos los cid y Pid al CartManager para que los busque: 
-        const prodAdd = await cartData.addProductsToCart(cid, pid, quantity);
-
-        if(prodAdd.success){
-            res.status(200).send(prodAdd.message);
-        }else{
-            res.status(400).send(prodAdd.message)
+    async addCPID(req, res) {
+        try {
+            const { cid, pid } = req.params;
+            const { quantity } = req.body;
+    
+            // Llama a la función para agregar productos al carrito y espera su respuesta
+            const prodAdd = await cartData.addProductsToCart(cid, pid, quantity);
+    
+            // Verifica si la operación fue exitosa
+            if (prodAdd.success) {
+                // Si fue exitosa, envía una respuesta 200 OK
+                return prodAdd.message
+            } else {
+                // Si no fue exitosa, envía una respuesta 400 Bad Request
+                return res.status(400).send(prodAdd.message);
+            }
+        } catch (error) {
+            // Si ocurre algún error durante el proceso, envía una respuesta 500 Internal Server Error
+            console.error(error);
+            return res.status(500).send({ error: "Error interno del servidor" });
         }
-
     }
+    
 
     async updateC(req,res){
          //Pedimos el cid como parámetro

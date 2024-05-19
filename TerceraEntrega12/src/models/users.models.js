@@ -35,9 +35,14 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre('save', async function(next){
     try{
-        const newCart = await CartModel.create({});
-        this.cart= newCart._id
-    }catch(error){next(error)}
+        if (this.isNew) {
+            const newCart = await CartModel.create({});
+            this.cart = newCart._id;
+        }
+        next();
+    } catch (error) {
+        next(error);
+    }
 })
 
 const UserModel = mongoose.model('users', userSchema);

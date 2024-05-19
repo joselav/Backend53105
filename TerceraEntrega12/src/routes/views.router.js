@@ -1,6 +1,6 @@
 const express =require ("express"); 
 const ProductManager= require("../controllers/ProductManager.js");
-const ProductModel = require("../models/products.model.js");
+const CartModel = require("../models/carts.model.js");
 const messageModel = require("../models/messages.model.js");
 const CartManager = require("../controllers/CartManager.js");
 
@@ -19,29 +19,33 @@ const viewsRouter = express.Router();
 const productData = new ProductManager();
 const cartData = new CartManager();
 
+const cartController = require("../controllers/cart.controller.js");
+const cData = new cartController();
+
 viewsRouter.get("/products", passport.authenticate("jwt", {session:false}), AllowedUser('user'), async (req,res)=>{
 
-    // //definimos el limit, pidiendo el dato que nos envíao o 10 por defecto;
-    // const limit =req.query.limit ||  10; 
-    // //Lo mismo con la page, la que nos envían o 1 por defecto;
-    // const page = req.query.page || 1; 
-    // //También con el sort, lo que ellos decidan o ascendente por defecto;
-    // const sort = req.query.sort || 'asc';
-    // //En el caso de la categoría, que es el dato que muestro en pantalla, la que ellos decidan o nada y que se muestren todos los elementos
-    // const category = req.query.category || '';
-
     try{
-       //enviamos la información al cartManager para que los pueda leer
-        // const products = await productData.getProducts(limit, page, sort, category);
-
         const products= await pData.getP(req,res);
 
         const cart = req.user.cart.toString();
 
-        console.log(products)
+        const cartID = await CartModel.findById(cart); 
+
+        console.log("carrito!!!", req.user.cart.toString())
+        console.log("Carrito???", cartID.products)
+
+        let cartCount = 0;
+
+        if(cartID && cartID.products){
+            cartID.products.forEach(product => {
+                cartCount += product.quantity;
+            });
+            // cartCount = cartID.products.length;
+        }
 
         const user= {
             cart: cart,
+            cartCount: cartCount,
             first_name: req.user.first_name,
             last_name: req.user.last_name,
             rol: req.user.rol
@@ -52,7 +56,6 @@ viewsRouter.get("/products", passport.authenticate("jwt", {session:false}), Allo
         res.render("products", 
         {productos: products, user: user});
     }catch(error){
-        console.log("Error al obtener productos", error);
         res.status(500).send({error: "Error interno del servidor"});
     }
     
@@ -72,18 +75,18 @@ viewsRouter.get("/carrito", async(req, res)=>{
     try{
         //Llamamos la infomación del carrito desde el Manager
          const carrito = await cartData.getCartAll();
-        
+
         //Acá lo mostraba en consola porque no funcionaba en handlebars jeje.
          //console.log(carrito);
 
          ///sin esto, handlebars no me leía los datos.
          //básicamente lo que hace es: 
          // con JSON.stringify convierte la infomación en cadena JSON y con JSON.parse lo vuelve un objeto para que Handlebars lo pueda leer correctamente. 
-         const cart = JSON.parse(JSON.stringify(carrito.message));
-
+         const carts = JSON.parse(JSON.stringify(carrito.message));
+         
 
          //renderizamos y enviamos la información a la vista. 
-         res.render("carrito", {carrito: cart})
+         res.render("carrito", {carrito: carts})
         
     }catch(error){
         res.status(500).send({error: "Error interno del servidor"})
@@ -157,5 +160,15 @@ viewsRouter.get("/current",passport.authenticate("jwt", {session:false}), async 
    
     
 })
+
+
+viewsRouter.post("/carts/:cid/products/:pid", passport.authenticate("jwt", { session: false }),AllowedUser('user'), async (req, res) => {
+    try {  
+       await cData.addCPID(req,res);
+       res.redirect("/products"); // Redirige a la página de productos después de agregar al carrito
+    } catch (error) {
+        res.status(500).send({ error: "Error interno del servidor" });
+    }
+});
 
 module.exports = viewsRouter;
