@@ -7,10 +7,48 @@ class CartController{
         const cart = await cartData.getCartAll();
 
         if(cart){
-            res.status(200).send(cart);
+            return cart;
         }else{
             res.status(400).send("Ha ocurrido un error");
         }
+    }
+
+    async getCartsViews(req,res){
+        try {
+        const cart = await cartData.getCartAll();
+
+        if (!cart.success) {
+            return "No hay carrito";
+        }
+
+
+        let totalQuantity = 0;
+        let totalPrice = 0;
+
+        const cartss = cart.message;
+
+        cartss.forEach(cart => {
+            cart.products.forEach(product => {
+                totalQuantity += product.quantity;
+                const price = Number(product.id_prod.price);
+                if (!isNaN(price)) {
+                    totalPrice += product.quantity * price;
+                } else {
+                    console.error(`Invalid price for product ID ${product.id_prod._id}:`, product.id_prod.price);
+                }
+            });
+        });
+
+        const carts= JSON.parse(JSON.stringify(cartss));
+
+        const response = { carts, totalPrice: totalPrice.toFixed(2), totalQuantity };
+
+        console.log(response)
+
+        return res.render("carrito", { carrito: response });
+    } catch (error) {
+        return res.status(500).send("Error interno del servidor");
+    }
     }
 
     async getCID(req, res){
@@ -119,7 +157,8 @@ class CartController{
 
         //Mostramos los mensajes correspondientes
         if(deleteProdCart.success){
-            res.status(200).send(deleteProdCart.message)
+            //res.status(200).send(deleteProdCart.message)
+            return deleteProdCart.message
         }else{
             res.status(400).send(deleteProdCart.message)
         }

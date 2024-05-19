@@ -163,9 +163,12 @@ div.pages p{
 
 
 #listCarrito{
+    width: 80%;
+    margin: auto;
     font-size: 20px;
-    color: red;
+    color: rgb(156, 94, 8);
 }
+
 
 div.produs{
     background-color: cadetblue;
@@ -233,4 +236,47 @@ div.welcome button a:hover{
     background-color: transparent;
     width: 40px;
     height: 40px;
+}
+
+.ppd{
+    width: 50%;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+}
+
+.cantcart {
+    width: 300px;
+    margin: auto;
+    text-align: center;
+    color: rgb(75, 46, 11);
+    font-weight: bold;
+}
+
+.cantcart p{
+    padding-top: 15px;
+}
+.cantcart span{
+    color: rgb(224, 104, 104);
+    font-size: 22px;
+}
+
+
+.btncar{
+    width: 300px;
+    margin: auto;
+}
+
+a{
+    color: rgb(50, 34, 5);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover{
+    color: rgb(250, 201, 145);
+    background-color:rgb(50, 34, 5) ;
+    border-radius: 20px;
+    text-align: center;
+    padding: 10px;
 }

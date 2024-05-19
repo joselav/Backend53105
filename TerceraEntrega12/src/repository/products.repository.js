@@ -71,8 +71,10 @@ class ProductServices{
             return {success: false, message: 'NOT FOUND. No hay producto existente con ese número de ID.'}
         }
 
+        const data = JSON.stringify(productID)
+
         //Le apliqué un sucess= true y un Message para poder llamarlo más fácil en el app.js. También le agregué un JSON.Stringify porque sino salia [object Object].
-        return {success:true, message: `Se ha encontrado el producto con id ${productID.id}: ${JSON.stringify(productID)}`};
+        return {success:true, message: productID};
     }
 
     async addProduct({title, description, price, thumbnail, code, category, stock}){
@@ -134,6 +136,23 @@ class ProductServices{
         }
 
         return {success: true, message: 'Producto eliminado exitosamente', deletedProduct: deleteProd};
+    }
+
+    async updateStock(pid, quantity){
+       try{ const product = await ProductModel.findByIdAndUpdate(pid,  { $inc: { stock: -quantity } }, // Resta la cantidad de stock
+        { new: true }) // Devuelve el documento actualizado);
+
+        if (!updatedProduct) {
+            return { success: false, message: "No se encontró el producto para actualizar el stock" };
+        }
+
+        return { success: true, message: "Stock actualizado correctamente" };
+    } catch (error) {
+        console.error("Error interno al actualizar el stock del producto:", error);
+        return { success: false, message: "Error interno al actualizar el stock del producto" };
+    }
+        
+       
     }
 }
 

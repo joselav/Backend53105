@@ -6,7 +6,7 @@ class CartServices{
     //Función para mostrar todo lo que hay en los carritos
     async getCartAll(){
         //con la función find lo que hacemos es devolver directamente todos los productos, en caso de solo querer uno se coloca en el ()
-        const cartShow = await CartModel.find();
+        const cartShow = await CartModel.find().populate('products.id_prod');
 
         //si no existe o no se logra leer cartShow, enviamos mensaje de error
         if(!cartShow){
@@ -29,7 +29,7 @@ class CartServices{
         }
 
         //Si se encuentra, se mande el mensaje y el array del carrito que se buscó.
-        return {success:true, message: `Se ha encontrado el producto con id ${cartID.id}: ${cartID}`};
+        return {success:true, message: cartID};
     };
 
     // addCart --> deberá crear un nuevo carrito con la siguiente estructura:
@@ -192,6 +192,19 @@ class CartServices{
         }
     }
 
+
+    async clearCart(cartId) {
+        try {
+            //limpiamos el carrito
+            const result = await CartModel.findByIdAndUpdate(cartId, { products: [] }, { new: true });
+            //enviamos el mensaje de éxito
+            return { success: true, message: "Carrito limpiado exitosamente", cart: result };
+        } catch (error) {
+            ///en caso de error, se muestra el error
+            console.error("Error al limpiar el carrito:", error);
+            return { success: false, message: "Error al limpiar el carrito" };
+        }
+    }
 }
 
 module.exports = CartServices;

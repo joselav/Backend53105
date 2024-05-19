@@ -24,7 +24,7 @@
 
 <p class="listd">Listado de Productos</h2>
 <div id="listProd">
-    {{#each productos.message}}
+    {{#each productos.payload}}
     <div class="prods" id="producto_{{this.id}}">
         <h2>{{this.title}}</h2>
         <p>REF: {{this.code}} </p>
