@@ -1,0 +1,4 @@
+{"level":"warn","message":"Mensaje de Warning (Warn) en /loggerTest - 18:20:10"}
+{"level":"error","message":"Mensaje de Error en /loggerTest - 18:20:10"}
+warning: Mensaje de Warning (Warn) en /loggerTest - 19:22:21
+error: Mensaje de Error en /loggerTest - 19:22:21
