@@ -2,3 +2,4 @@
 {"level":"error","message":"Mensaje de Error en /loggerTest - 18:20:10"}
 warning: Mensaje de Warning (Warn) en /loggerTest - 19:22:21
 error: Mensaje de Error en /loggerTest - 19:22:21
+error: Error interno del servidor en /products - 22:00:19
